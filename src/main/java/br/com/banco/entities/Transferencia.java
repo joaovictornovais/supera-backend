@@ -10,7 +10,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 import br.com.banco.enums.Tipos;
 import lombok.Data;
@@ -38,8 +37,5 @@ public class Transferencia implements Serializable{
 	
 	@Column(nullable = false)
 	private int conta_id;
-	
-	
-	
 	
 }

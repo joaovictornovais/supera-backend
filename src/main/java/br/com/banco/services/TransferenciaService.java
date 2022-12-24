@@ -31,6 +31,10 @@ public class TransferenciaService {
 		return repository.findById(id);
 	}
 	
+	public Optional<List<Transferencia>> findByNomeOperadorTransacao(@PathVariable String nome) {
+		return repository.findByNomeOperadorTransacao(nome);
+	}
+	
 	@Transactional
 	public void delete(@PathVariable Long id) {
 		repository.deleteById(id);
