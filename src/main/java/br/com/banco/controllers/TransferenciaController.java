@@ -47,7 +47,10 @@ public class TransferenciaController {
 	}
 	
 	@GetMapping("/nomes/{nome}")
-	public ResponseEntity<Object> getTransferenciaByNomeOperadorTransacao(@PathVariable String nome) {
+	public ResponseEntity<Object> getTransferenciaByNomeOperadorTransacao(
+			@PathVariable String nome,
+			@RequestParam(value="minDate", defaultValue="2019-01-01") String minDate,
+			@RequestParam(value="maxDate", defaultValue="") String maxDate) {
 		Optional<List<Transferencia>> transferenciaOptional = service.findByNomeOperadorTransacao(nome);
 		if (transferenciaOptional.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nenhuma operação foi encontrada.");
@@ -58,6 +61,9 @@ public class TransferenciaController {
 	@PostMapping
 	public ResponseEntity<Transferencia> create(@RequestBody Transferencia novaTransferencia) {
 		novaTransferencia.setDataTransferencia(LocalDate.now(ZoneId.of("UTC")));
+		if (novaTransferencia.getNomeOperadorTransacao() == null) {
+			novaTransferencia.setNomeOperadorTransacao("Não informado");
+		}
 		return ResponseEntity.status(HttpStatus.CREATED).body(service.save(novaTransferencia));
 	}
 	
