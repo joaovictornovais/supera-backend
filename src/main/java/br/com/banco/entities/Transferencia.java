@@ -1,7 +1,7 @@
 package br.com.banco.entities;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +23,7 @@ public class Transferencia implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private LocalDateTime dataTransferencia;
+	private LocalDate dataTransferencia;
 	
 	@Column(nullable = false)
 	private Double valor;
@@ -32,7 +32,8 @@ public class Transferencia implements Serializable{
 	@Column(nullable = false, length = 15)
 	private Tipos tipo;
 	
-	@Column(length = 50)
+	
+	@Column(nullable = false, length = 50)
 	private String nomeOperadorTransacao;
 	
 	@Column(nullable = false)

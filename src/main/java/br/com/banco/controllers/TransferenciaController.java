@@ -1,6 +1,6 @@
 package br.com.banco.controllers;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.banco.entities.Transferencia;
@@ -30,8 +31,10 @@ public class TransferenciaController {
 	private final TransferenciaService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Transferencia>> findAll() {
-		return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
+	public ResponseEntity<List<Transferencia>> findAll(
+			@RequestParam(value="minDate", defaultValue="2019-01-01") String minDate,
+			@RequestParam(value="maxDate", defaultValue="") String maxDate) {
+		return ResponseEntity.status(HttpStatus.OK).body(service.findByDataTransferenciaBetween(minDate, maxDate));
 	}
 	
 	@GetMapping("/{id}")
@@ -54,7 +57,7 @@ public class TransferenciaController {
 	
 	@PostMapping
 	public ResponseEntity<Transferencia> create(@RequestBody Transferencia novaTransferencia) {
-		novaTransferencia.setDataTransferencia(LocalDateTime.now(ZoneId.of("UTC")));
+		novaTransferencia.setDataTransferencia(LocalDate.now(ZoneId.of("UTC")));
 		return ResponseEntity.status(HttpStatus.CREATED).body(service.save(novaTransferencia));
 	}
 	
